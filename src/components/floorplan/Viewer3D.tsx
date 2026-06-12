@@ -6,39 +6,6 @@ import type { Floor } from "@/lib/floorplan/types";
 
 const SCALE = 0.02;
 
-function FloorBlock({ floor, baseY }: { floor: Floor; baseY: number }) {
-  return (
-    <group position={[0, baseY, 0]}>
-      {floor.rooms.map((room) => {
-        const w = room.width * SCALE;
-        const d = room.height * SCALE;
-        const h = room.wallHeight * SCALE * 5;
-        const x = room.x * SCALE + w / 2;
-        const z = room.y * SCALE + d / 2;
-        return (
-          <group key={room.id} position={[x, 0, z]}>
-            {/* floor */}
-            <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-              <planeGeometry args={[w, d]} />
-              <meshStandardMaterial color={room.color} />
-            </mesh>
-            {/* walls (box shell) */}
-            <mesh position={[0, h / 2, 0]} castShadow>
-              <boxGeometry args={[w, h, d]} />
-              <meshStandardMaterial color={room.color} transparent opacity={0.45} />
-            </mesh>
-            {/* edges */}
-            <lineSegments position={[0, h / 2, 0]}>
-              <edgesGeometry args={[ /* @ts-expect-error - r3f args */ undefined]} attach="geometry" />
-              <lineBasicMaterial color="#0f172a" />
-            </lineSegments>
-          </group>
-        );
-      })}
-    </group>
-  );
-}
-
 export function Viewer3D() {
   const { project, activeFloor } = useFloorplan();
   const [showAll, setShowAll] = useState(true);
