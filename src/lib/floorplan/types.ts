@@ -25,7 +25,7 @@ export interface ProjectData {
 }
 
 export const DEFAULT_PROJECT: ProjectData = {
-  name: "Meu Projeto",
+  name: "Meu Projeto teste",
   activeFloorId: "f1",
   floors: [
     {
