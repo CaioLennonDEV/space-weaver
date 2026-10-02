@@ -78,14 +78,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Floorplan Studio" },
+      {
+        name: "description",
+        content:
+          "Desenhe plantas internas em 2D com SVG e visualize em 3D. Salas, andares e exportação JSON.",
+      },
+      { property: "og:title", content: "Floorplan Studio" },
+      {
+        property: "og:description",
+        content: "Editor 2D de plantas internas com visualização 3D e múltiplos andares.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
