@@ -8,7 +8,6 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   // Coolify/Docker precisa de Node, não Cloudflare Workers
-  cloudflare: false,
   nitro: {
     preset: "node-server",
   },

@@ -6,16 +6,39 @@ import type { Floor } from "@/lib/floorplan/types";
 
 const SCALE = 0.02;
 
+function isWebGLAvailable(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
 export function Viewer3D() {
   const { project, activeFloor } = useFloorplan();
   const [showAll, setShowAll] = useState(true);
+  const [webglOk] = useState(() => isWebGLAvailable());
 
   const FLOOR_GAP = 1.8;
   const floorsToRender = showAll ? project.floors : [activeFloor];
 
+  if (!webglOk) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-muted/30 p-8 text-center">
+        <p className="text-sm font-medium">Não foi possível iniciar a visualização 3D</p>
+        <p className="max-w-sm text-xs text-muted-foreground">
+          O navegador bloqueou o WebGL (necessário para o 3D). Abra a pré-visualização em uma aba
+          separada, ou ative a aceleração de hardware nas configurações do navegador e recarregue a
+          página.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="relative h-full w-full bg-muted/30">
-      <Canvas shadows camera={{ position: [10, 10, 14], fov: 50 }}>
+      <Canvas shadows camera={{ position: [10, 10, 14], fov: 50 }} gl={{ failIfMajorPerformanceCaveat: false }}>
         <ambientLight intensity={0.6} />
         <directionalLight position={[10, 15, 8]} intensity={1} castShadow />
         <Grid args={[40, 40]} cellColor="#94a3b8" sectionColor="#475569" infiniteGrid fadeDistance={40} />
